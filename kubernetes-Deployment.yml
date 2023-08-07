@@ -1,0 +1,13 @@
+---
+- hosts: kubernetes
+  user: root
+
+  tasks:
+    - name: deploy cafe-app image on minikube
+      command: kubectl apply -f cafe-app-deployment.yml
+
+    - name: create service for cafe-app
+      command: kubectl apply -f cafe-app-service.yml
+
+    - name: update deployment with new pods if image updated in dockerhub
+      command: kubectl rollout restart deployment.apps/mylab-cafe-app
